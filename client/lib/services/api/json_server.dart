@@ -22,7 +22,7 @@ class JSONServerAPI {
         return data.map((item) => Recipe.fromJson(item)).toList();
       }
     } catch (error, trace) {
-      print("Error: $error. \n\Trace: $trace");
+      print("Error: $error. \n\nTrace: $trace");
     }
     return [];
   }

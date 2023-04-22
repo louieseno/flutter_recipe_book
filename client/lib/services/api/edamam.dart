@@ -21,7 +21,7 @@ class EdamamAPI {
   Future<List<EdamamRecipe>> getEdamamList() async {
     try {
       final Response<dynamic> response = await dio.get("$baseURL/search",
-          queryParameters: {"q": 'meatasds', "from": "$start", "to": "$limit"});
+          queryParameters: {"q": 'fish', "from": "$start", "to": "$limit"});
       List snapshot = [];
 
       if (response.statusCode == 200) {
@@ -31,7 +31,7 @@ class EdamamAPI {
         return EdamamRecipe.recipesFromSnapshot(snapshot);
       }
     } catch (error, trace) {
-      print("Error: $error. \n\Trace: $trace");
+      print("Error: $error. \n\nTrace: $trace");
     }
     return [];
   }
