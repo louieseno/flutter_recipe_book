@@ -1,7 +1,6 @@
-import 'base_date.dart';
 import 'dart:convert';
 
-class Recipe extends BaseDate {
+class Recipe {
   String id;
   String name;
   String image;
@@ -14,7 +13,7 @@ class Recipe extends BaseDate {
     required this.image,
     required this.rating,
     required this.totalTime,
-  }) : super();
+  });
 
   factory Recipe.fromRawJson(String str) =>
       Recipe.fromJson(json.decode(str) as Map<String, dynamic>);
@@ -22,14 +21,12 @@ class Recipe extends BaseDate {
   String toRawJson() => json.encode(toJson());
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'image': image,
-    'rating': rating,
-    'totalTime': totalTime,
-    'createdAt': createdAt,
-    'modifiedAt': modifiedAt
-  };
+        'id': id,
+        'name': name,
+        'image': image,
+        'rating': rating,
+        'totalTime': totalTime,
+      };
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
@@ -40,5 +37,4 @@ class Recipe extends BaseDate {
       totalTime: json['totalTime'],
     );
   }
-
 }
