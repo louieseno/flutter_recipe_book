@@ -2,8 +2,8 @@ import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:dio/dio.dart';
 
 const baseURL = 'https://edamam-recipe-search.p.rapidapi.com';
-const start = "0";
-const limit = "10";
+const start = 0;
+const limit = 10;
 
 class EdamamAPI {
   late Dio dio;
@@ -21,7 +21,7 @@ class EdamamAPI {
   Future<List<EdamamRecipe>> getEdamamList() async {
     try {
       final Response<dynamic> response = await dio.get("$baseURL/search",
-          queryParameters: {"q": 'fish', "from": "0", "to": "10"});
+          queryParameters: {"q": 'meatasds', "from": "$start", "to": "$limit"});
       List snapshot = [];
 
       if (response.statusCode == 200) {

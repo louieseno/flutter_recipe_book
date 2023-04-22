@@ -2,7 +2,7 @@ import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/domain/usecases/recipe/fetch_edamam_recipes.dart';
 import 'package:get/get.dart';
 
-class RecipeFormController extends GetxController {
+class OnlineRecipesController extends GetxController {
   RxBool isFetching = false.obs;
   final RxList<EdamamRecipe> edamamMasterList = <EdamamRecipe>[].obs;
   final FetchEdamamRecipesUseCase _edamamRecipeUseCase =

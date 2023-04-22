@@ -1,4 +1,4 @@
-import 'package:client/presenter/screens/recipe_form/recipe_form_screen.dart';
+import 'package:client/presenter/screens/online_recipes/online_recipes_screen.dart';
 import 'package:client/presenter/widgets/conditional_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:client/presenter/screens/home/home_controller.dart';
@@ -27,7 +27,7 @@ class HomeScreen extends GetView<HomeController> {
         ),
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(RecipeFormScreen.route),
+        onPressed: () => Get.toNamed(OnlineRecipesScreen.route),
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

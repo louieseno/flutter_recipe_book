@@ -9,7 +9,6 @@ class HomeController extends GetxController {
 
   @override
   Future<void> onReady() async {
-    print('READY HOME');
     await _fetchMyRecipes();
     super.onReady();
   }
