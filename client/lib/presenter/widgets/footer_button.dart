@@ -4,11 +4,13 @@ class FooterButton extends StatelessWidget {
   final void Function() onTap;
   final Color? color;
   final String? label;
+  final IconData? iconData;
 
   const FooterButton({
     required this.onTap,
     this.color = Colors.purple,
     this.label = 'Save Changes',
+    this.iconData,
     super.key,
   });
 
@@ -25,6 +27,15 @@ class FooterButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if (iconData != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(
+                      iconData,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
                 Text(
                   label!,
                   style: FooterButtonStyle.saveButtonTextStyle,

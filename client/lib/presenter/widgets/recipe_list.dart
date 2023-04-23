@@ -32,7 +32,7 @@ class RecipeList extends StatelessWidget {
                 onTap: () => RecipeDialog.showDetails(
                     context: context,
                     recipe: recipes[index],
-                    showFooter: screen != HomeScreen.route),
+                    showAddFooter: screen != HomeScreen.route),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

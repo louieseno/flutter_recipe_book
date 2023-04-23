@@ -1,6 +1,5 @@
 import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/presenter/widgets/cached_image.dart';
-import 'package:client/presenter/widgets/footer_button.dart';
 import 'package:flutter/material.dart';
 
 class RecipeDialog {
@@ -8,21 +7,25 @@ class RecipeDialog {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: strings.map((item) {
-          final int idx = strings.indexOf(item) + 1;
           return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              "$idx. $item",
-              style: RecipeStyle.ingredientStyle,
-            ),
-          );
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+              child: Row(children: [
+                const Text('\u2022 ', style: TextStyle(fontSize: 25)),
+                Expanded(
+                  child: Text(
+                    item,
+                    style: RecipeStyle.ingredientStyle,
+                  ),
+                )
+              ]));
         }).toList());
   }
 
   static Future<void> showDetails({
     required BuildContext context,
     required EdamamRecipe recipe,
-    bool showFooter = true,
+    bool showAddFooter = true,
   }) {
     return showDialog<void>(
       context: context,
@@ -61,23 +64,51 @@ class RecipeDialog {
                     ],
                   ),
                 )),
-                if (showFooter) ...[
-                  Padding(
-                    padding: RecipeStyle.footerButtonPadding,
-                    child: FooterButton(
-                      onTap: () => print('add bookmark'),
-                      label: 'Add Recipe',
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 25.0, vertical: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (showAddFooter) ...[
+                        InkWell(
+                          onTap: () => print('press'),
+                          child: Padding(
+                            padding: RecipeStyle.footerButtonPadding,
+                            child: RichText(
+                              text: const TextSpan(
+                                style: RecipeStyle.footerButtonAddText,
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.bookmark_add,
+                                      size: 16,
+                                      color: Colors.purple,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " Add Recipe",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                      ],
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Padding(
+                          padding: RecipeStyle.footerButtonPadding,
+                          child: Text(
+                            'Close',
+                            style: RecipeStyle.footerButtonCloseText,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: RecipeStyle.footerButtonPadding,
-                    child: FooterButton(
-                      onTap: () => Navigator.pop(context),
-                      color: Colors.redAccent,
-                      label: 'Close',
-                    ),
-                  )
-                ]
+                )
               ],
             ),
           ),
@@ -95,19 +126,21 @@ class RecipeDialog {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Delete My Recipe",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+            title: const Text(
+              "Delete My Recipe",
+              style: RecipeStyle.deleteTitleTextStyle,
+            ),
             content: RichText(
               text: TextSpan(
-                style: const TextStyle(
-                    color: Colors.black, fontSize: 14, height: 1.5),
+                style: RecipeStyle.deleteRichTextStyle,
                 children: <TextSpan>[
                   const TextSpan(
                     text: "Are you sure you want to delete\n",
                   ),
                   TextSpan(
-                      text: "${recipe.label} recipe ?",
-                      style: const TextStyle(fontWeight: FontWeight.w700))
+                    text: "${recipe.label} recipe ?",
+                    style: RecipeStyle.richTextBold,
+                  )
                 ],
               ),
             ),
@@ -134,13 +167,21 @@ class RecipeDialog {
 
 class RecipeStyle {
   static const ingredientStyle =
-      TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
+      TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500);
   static const labelStyle =
       TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
   static const imageMargin = EdgeInsets.only(top: 20.0);
   static const imagePadding = EdgeInsets.all(8.0);
   static const dialogPadding =
-      EdgeInsets.symmetric(horizontal: 15.0, vertical: 100.0);
-  static const footerButtonPadding =
-      EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0);
+      EdgeInsets.symmetric(horizontal: 15.0, vertical: 120.0);
+  static const footerButtonPadding = EdgeInsets.all(15.0);
+  static const footerButtonCloseText =
+      TextStyle(color: Colors.red, fontSize: 16);
+  static const footerButtonAddText =
+      TextStyle(color: Colors.purple, fontSize: 16);
+  static const richTextBold = TextStyle(fontWeight: FontWeight.w700);
+  static const deleteTitleTextStyle =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.w900);
+  static const deleteRichTextStyle =
+      TextStyle(color: Colors.black, fontSize: 16, height: 1.5);
 }
