@@ -7,8 +7,11 @@ import 'package:client/domain/repositories/recipe.dart';
 
 class DateImplementRecipe implements RecipeRepository {
   @override
-  Future<List<EdamamRecipe>> get fetchEdamamRecipes async {
-    final List<EdamamRecipe> response = await EdamamAPI().getEdamamList();
+  Future<List<EdamamRecipe>> fetchEdamamRecipes({
+    String? search,
+  }) async {
+    final List<EdamamRecipe> response =
+        await EdamamAPI().getEdamamList(search: search);
     return response;
   }
 

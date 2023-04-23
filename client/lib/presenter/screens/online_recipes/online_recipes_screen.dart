@@ -17,28 +17,36 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
         title: const Text("Online Recipes"),
       ),
       body: Center(
-        child: Obx(
-          () => ConditionalWidget(
-            condition: controller.isFetching.value,
-            passedWidget: const CustomLoader(
-              message: 'Fetching Online Recipes',
-            ),
-            failedWidget: Padding(
-              padding: RecipeStyle.containerPadding,
-              child: Column(
-                children: [
-                  TextField(
-                    controller: controller.searchTextController,
-                    decoration: RecipeStyle.searchBoxstyle,
+        child: Padding(
+          padding: RecipeStyle.containerPadding,
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 15.0),
+                child: TextField(
+                  controller: controller.searchTextController,
+                  onChanged: (String value) =>
+                      controller.searchFoodRecipe(value),
+                  decoration: RecipeStyle.searchBoxstyle,
+                ),
+              ),
+              Obx(
+                () => ConditionalWidget(
+                  condition: controller.isFetching.value,
+                  passedWidget: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CustomLoader(
+                      message: 'Fetching Online Recipes',
+                    ),
                   ),
-                  RecipeList(
+                  failedWidget: RecipeList(
                     screen: OnlineRecipesScreen.route,
                     recipes: controller.edamamMasterList,
                     showBookmarkIcon: true,
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

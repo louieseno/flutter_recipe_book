@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/domain/usecases/recipe/fetch_edamam_recipes.dart';
 import 'package:client/domain/usecases/recipe/update_my_recipes.dart';
@@ -7,19 +8,21 @@ import 'package:get/get.dart';
 
 class OnlineRecipesController extends GetxController {
   List<EdamamRecipe> myRecipes = Get.arguments;
+
+  Timer? _searchDebounce;
   final TextEditingController searchTextController = TextEditingController();
 
   final RxBool isFetching = false.obs;
   final RxList<EdamamRecipe> edamamMasterList = <EdamamRecipe>[].obs;
   final RxList<String> selectedRecipeIDs = <String>[].obs;
-  final FetchEdamamRecipesUseCase _edamamRecipeUseCase =
+  final FetchEdamamRecipesUseCase _fetchRecipeUseCase =
       FetchEdamamRecipesUseCase();
 
   final RxBool isSaving = false.obs;
   final UpdateMyRecipesUseCase _updateMyRecipesUseCase =
       UpdateMyRecipesUseCase();
 
-  void saveMyList() async {
+  Future<void> saveMyList() async {
     isSaving.value = true;
     final defaultIds =
         myRecipes.map((EdamamRecipe recipe) => recipe.id).toList();
@@ -47,11 +50,28 @@ class OnlineRecipesController extends GetxController {
     }
   }
 
+  void searchFoodRecipe(String search) {
+    if (_searchDebounce?.isActive ?? false) {
+      _searchDebounce?.cancel();
+    }
+
+    _searchDebounce = Timer(const Duration(milliseconds: 800), () async {
+      await _fetchMasterlist(searchValue: search);
+    });
+  }
+
+  Future<void> _fetchMasterlist({String? searchValue = ''}) async {
+    isFetching.value = true;
+    final result = await _fetchRecipeUseCase.execute(search: searchValue);
+    edamamMasterList.value = result;
+    isFetching.value = false;
+  }
+
   @override
   Future<void> onInit() async {
     final defaultIds =
         myRecipes.map((EdamamRecipe recipe) => recipe.id).toList();
-    selectedRecipeIDs.addAll(defaultIds);
+    selectedRecipeIDs.value = defaultIds;
     super.onInit();
   }
 
@@ -63,10 +83,9 @@ class OnlineRecipesController extends GetxController {
     super.onReady();
   }
 
-  Future<void> _fetchMasterlist() async {
-    isFetching.value = true;
-    final result = await _edamamRecipeUseCase.execute();
-    edamamMasterList.addAll(result);
-    isFetching.value = false;
+  @override
+  Future<void> onClose() async {
+    _searchDebounce?.cancel();
+    super.onClose();
   }
 }

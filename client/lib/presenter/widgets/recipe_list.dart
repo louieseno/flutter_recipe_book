@@ -43,37 +43,44 @@ class RecipeList extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CachedImage(
-                          url: recipes[index].image,
-                        ),
+                        CachedImage(url: recipes[index].image),
                         Padding(
                           padding: RecipeStyles.labelPadding,
-                          child: Wrap(
-                            direction: Axis.vertical,
-                            spacing: 5,
-                            children: [
-                              Text(
-                                recipes[index].label,
-                                style: RecipeStyles.labelStyle,
-                              ),
-                              Text(
-                                recipes[index].dishType.toTitleCase(),
-                                style: RecipeStyles.dishTypeStyle,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  style: RecipeStyles.ingredientsStyle,
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text:
-                                            "${recipes[index].ingredients.length}",
-                                        style:
-                                            RecipeStyles.ingedientsTotalStyle),
-                                    const TextSpan(text: ' Ingredients')
-                                  ],
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  recipes[index].label,
+                                  softWrap: true,
+                                  style: RecipeStyles.labelStyle,
+                                  maxLines: 3,
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 0.0, vertical: 5.0),
+                                  child: Text(
+                                    recipes[index].dishType.toTitleCase(),
+                                    style: RecipeStyles.dishTypeStyle,
+                                  ),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    style: RecipeStyles.ingredientsStyle,
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text:
+                                              "${recipes[index].ingredients.length}",
+                                          style: RecipeStyles
+                                              .ingedientsTotalStyle),
+                                      const TextSpan(text: ' Ingredients')
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -117,7 +124,7 @@ class RecipeList extends StatelessWidget {
 
 class RecipeStyles {
   static const listPadding =
-      EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0);
+      EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0);
 
   static const labelPadding = EdgeInsets.only(left: 10);
 

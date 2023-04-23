@@ -6,20 +6,18 @@ class CachedImage extends StatelessWidget {
   final double? width;
   final double? height;
   const CachedImage(
-      {required this.url, this.width = 60.0, this.height = 60.0, super.key});
+      {required this.url, this.width = 80.0, this.height = 80.0, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return CachedNetworkImage(
       width: width,
       height: height,
-      child: CachedNetworkImage(
-        imageUrl: url,
-        progressIndicatorBuilder: (context, url, downloadProgress) =>
-            CircularProgressIndicator(
-                value: downloadProgress.progress, strokeWidth: 2.0),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-      ),
+      imageUrl: url,
+      progressIndicatorBuilder: (context, url, downloadProgress) =>
+          CircularProgressIndicator(
+              value: downloadProgress.progress, strokeWidth: 2.0),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }

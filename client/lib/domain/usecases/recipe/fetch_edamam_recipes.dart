@@ -6,7 +6,7 @@ class FetchEdamamRecipesUseCase {
   final RecipeRepository _recipeRepository;
   FetchEdamamRecipesUseCase() : _recipeRepository = DateImplementRecipe();
 
-  Future<List<EdamamRecipe>> execute() async {
-    return await _recipeRepository.fetchEdamamRecipes;
+  Future<List<EdamamRecipe>> execute({String? search}) async {
+    return await _recipeRepository.fetchEdamamRecipes(search: search);
   }
 }
