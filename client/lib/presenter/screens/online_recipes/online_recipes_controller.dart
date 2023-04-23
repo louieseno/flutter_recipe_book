@@ -1,34 +1,42 @@
 import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/domain/usecases/recipe/fetch_edamam_recipes.dart';
 import 'package:client/domain/usecases/recipe/update_my_recipes.dart';
+import 'package:client/presenter/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OnlineRecipesController extends GetxController {
-  dynamic myRecipes = Get.arguments;
+  List<EdamamRecipe> myRecipes = Get.arguments;
   final TextEditingController searchTextController = TextEditingController();
 
-  final List<String> removedRecipeIDs = [];
-
   final RxBool isFetching = false.obs;
-
-  final RxList<String> selectedRecipeIDs = <String>[].obs;
   final RxList<EdamamRecipe> edamamMasterList = <EdamamRecipe>[].obs;
-
+  final RxList<String> selectedRecipeIDs = <String>[].obs;
   final FetchEdamamRecipesUseCase _edamamRecipeUseCase =
       FetchEdamamRecipesUseCase();
+
+  final RxBool isSaving = false.obs;
   final UpdateMyRecipesUseCase _updateMyRecipesUseCase =
       UpdateMyRecipesUseCase();
 
   void saveMyList() async {
-    final selectedRecipes = edamamMasterList
-        .where((recipe) => selectedRecipeIDs.contains(recipe.id))
-        .toList();
-    await _updateMyRecipesUseCase.execute(selectedRecipes);
+    isSaving.value = true;
+    final defaultIds =
+        myRecipes.map((EdamamRecipe recipe) => recipe.id).toList();
 
-    // print("SELECTED: $selectedRecipeIDs");
-    // print("REMOVED: $removedRecipeIDs");
-    // print("MY RECIPES: $myRecipes");
+    final toRemoveIDs = defaultIds
+        .where((String id) => !selectedRecipeIDs.contains(id))
+        .toList();
+
+    final nonExistingRecipes = edamamMasterList
+        .where((recipe) =>
+            selectedRecipeIDs.contains(recipe.id) &&
+            !defaultIds.contains(recipe.id))
+        .toList();
+
+    await _updateMyRecipesUseCase.execute(nonExistingRecipes, toRemoveIDs);
+    isSaving.value = false;
+    Get.offAllNamed(HomeScreen.route);
   }
 
   void updateSelectedRecipe(String id) {
@@ -41,8 +49,9 @@ class OnlineRecipesController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    print(myRecipes);
-    // selectedRecipeIDs.addAll(myRecipes);
+    final defaultIds =
+        myRecipes.map((EdamamRecipe recipe) => recipe.id).toList();
+    selectedRecipeIDs.addAll(defaultIds);
     super.onInit();
   }
 

@@ -1,5 +1,6 @@
 import 'package:client/presenter/screens/online_recipes/online_recipes_controller.dart';
 import 'package:client/presenter/widgets/conditional_widget.dart';
+import 'package:client/presenter/widgets/custom_loader.dart';
 import 'package:client/presenter/widgets/footer_button.dart';
 import 'package:client/presenter/widgets/recipe_list.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,9 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
         child: Obx(
           () => ConditionalWidget(
             condition: controller.isFetching.value,
-            passedWidget: const CircularProgressIndicator(),
+            passedWidget: const CustomLoader(
+              message: 'Fetching Online Recipes',
+            ),
             failedWidget: Padding(
               padding: RecipeStyle.containerPadding,
               child: Column(

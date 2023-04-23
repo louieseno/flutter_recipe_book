@@ -6,7 +6,8 @@ class UpdateMyRecipesUseCase {
   final RecipeRepository _recipeRepository;
   UpdateMyRecipesUseCase() : _recipeRepository = DateImplementRecipe();
 
-  Future<void> execute(List<EdamamRecipe> recipes) async {
-    return await _recipeRepository.updateMyRecipes(recipes);
+  Future<void> execute(
+      List<EdamamRecipe> recipes, List<String> toRemoveIds) async {
+    return await _recipeRepository.updateMyRecipes(recipes, toRemoveIds);
   }
 }

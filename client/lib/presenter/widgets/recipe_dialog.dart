@@ -25,7 +25,7 @@ class RecipeDialog {
   static Future<void> showDetails({
     required BuildContext context,
     required EdamamRecipe recipe,
-    bool showAddFooter = true,
+    void Function()? addRecipe,
   }) {
     return showDialog<void>(
       context: context,
@@ -70,9 +70,12 @@ class RecipeDialog {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      if (showAddFooter) ...[
+                      if (addRecipe != null) ...[
                         InkWell(
-                          onTap: () => print('press'),
+                          onTap: () {
+                            addRecipe();
+                            Navigator.of(context).pop();
+                          },
                           child: Padding(
                             padding: RecipeStyle.footerButtonPadding,
                             child: RichText(

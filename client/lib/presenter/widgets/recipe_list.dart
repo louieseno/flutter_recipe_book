@@ -30,9 +30,13 @@ class RecipeList extends StatelessWidget {
               padding: RecipeStyles.listPadding,
               child: InkWell(
                 onTap: () => RecipeDialog.showDetails(
-                    context: context,
-                    recipe: recipes[index],
-                    showAddFooter: screen != HomeScreen.route),
+                  context: context,
+                  recipe: recipes[index],
+                  addRecipe: screen == HomeScreen.route
+                      ? null
+                      : () => Get.find<OnlineRecipesController>()
+                          .updateSelectedRecipe(recipes[index].id),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

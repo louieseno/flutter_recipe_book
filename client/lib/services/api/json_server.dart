@@ -25,10 +25,15 @@ class JSONServerAPI {
     return [];
   }
 
-  Future<void> updateMyRecipes(List<EdamamRecipe> recipes) async {
+  Future<void> updateMyRecipes(
+      List<EdamamRecipe> insertRecipies, List<String> toRemoveIds) async {
     try {
-      final toInsert = EdamamRecipe.objectFromRecipes(recipes);
-      var futures = await Future.wait(toInsert
+      if (toRemoveIds.isNotEmpty) {
+        await Future.wait(toRemoveIds.map((id) => deleteMyRecipe(id)));
+      }
+
+      final toInsert = EdamamRecipe.objectFromRecipes(insertRecipies);
+      await Future.wait(toInsert
           .map((object) => dio.post("$baseURL/recipes", data: object))
           .toList());
     } catch (error, trace) {

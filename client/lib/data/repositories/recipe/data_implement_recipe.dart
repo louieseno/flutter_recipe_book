@@ -19,8 +19,9 @@ class DateImplementRecipe implements RecipeRepository {
   }
 
   @override
-  Future<void> updateMyRecipes(List<EdamamRecipe> recipes) async {
-    await JSONServerAPI().updateMyRecipes(recipes);
+  Future<void> updateMyRecipes(
+      List<EdamamRecipe> recipes, List<String> toRemoveIds) async {
+    await JSONServerAPI().updateMyRecipes(recipes, toRemoveIds);
   }
 
   @override

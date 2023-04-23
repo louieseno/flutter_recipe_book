@@ -1,5 +1,6 @@
 import 'package:client/presenter/screens/online_recipes/online_recipes_screen.dart';
 import 'package:client/presenter/widgets/conditional_widget.dart';
+import 'package:client/presenter/widgets/custom_loader.dart';
 import 'package:client/presenter/widgets/recipe_list.dart';
 import 'package:flutter/material.dart';
 import 'package:client/presenter/screens/home/home_controller.dart';
@@ -19,7 +20,9 @@ class HomeScreen extends GetView<HomeController> {
           child: Obx(
         () => ConditionalWidget(
           condition: controller.isFetching.value,
-          passedWidget: const CircularProgressIndicator(),
+          passedWidget: const CustomLoader(
+            message: 'Fetching My Recipes',
+          ),
           failedWidget: ConditionalWidget(
             condition: controller.myRecipes.isEmpty,
             passedWidget: Column(
@@ -48,19 +51,19 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
       )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(
-          OnlineRecipesScreen.route,
-          arguments: controller.myRecipes,
-        ),
-        tooltip:
-            controller.myRecipes.isEmpty ? 'Add Recipes' : 'Modify Recipes',
-        child: ConditionalWidget(
-          condition: controller.myRecipes.isEmpty,
-          passedWidget: const Icon(Icons.add),
-          failedWidget: const Icon(Icons.edit),
-        ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: Obx(() => FloatingActionButton(
+            onPressed: () => Get.toNamed(
+              OnlineRecipesScreen.route,
+              arguments: controller.myRecipes,
+            ),
+            tooltip:
+                controller.myRecipes.isEmpty ? 'Add Recipes' : 'Modify Recipes',
+            child: ConditionalWidget(
+              condition: controller.myRecipes.isEmpty,
+              passedWidget: const Icon(Icons.add),
+              failedWidget: const Icon(Icons.edit),
+            ),
+          )), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
