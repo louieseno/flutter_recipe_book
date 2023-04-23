@@ -31,7 +31,15 @@ class JSONServerAPI {
       var futures = await Future.wait(toInsert
           .map((object) => dio.post("$baseURL/recipes", data: object))
           .toList());
-      print("update");
+    } catch (error, trace) {
+      print("Error: $error. \n\nTrace: $trace");
+    }
+    return;
+  }
+
+  Future<void> deleteMyRecipe(String id) async {
+    try {
+      await dio.delete("$baseURL/recipes/$id");
     } catch (error, trace) {
       print("Error: $error. \n\nTrace: $trace");
     }

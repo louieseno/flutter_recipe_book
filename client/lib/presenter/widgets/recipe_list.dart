@@ -1,4 +1,5 @@
 import 'package:client/domain/entities/edamam_recipe.dart';
+import 'package:client/presenter/screens/home/home_controller.dart';
 import 'package:client/presenter/screens/home/home_screen.dart';
 import 'package:client/presenter/screens/online_recipes/online_recipes_controller.dart';
 import 'package:client/presenter/widgets/cached_image.dart';
@@ -97,7 +98,8 @@ class RecipeList extends StatelessWidget {
                         onPressed: () => RecipeDialog.showDeletePrompt(
                           context: context,
                           recipe: recipes[index],
-                          confirmedDelete: () => print('delete'),
+                          confirmedDelete: () => Get.find<HomeController>()
+                              .deleteRecipe(recipes[index].id),
                         ),
                       )
                   ],
