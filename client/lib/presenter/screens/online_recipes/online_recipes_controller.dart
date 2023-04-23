@@ -17,7 +17,7 @@ class OnlineRecipesController extends GetxController
 
   final RxBool isFetching = false.obs;
   final RxList<EdamamRecipe> edamamMasterList = <EdamamRecipe>[].obs;
-  final RxList<String> selectedRecipeIDs = <String>[].obs;
+  final RxList<EdamamRecipe> selectedRecipes = <EdamamRecipe>[].obs;
   final FetchEdamamRecipesUseCase _fetchRecipeUseCase =
       FetchEdamamRecipesUseCase();
 
@@ -25,19 +25,21 @@ class OnlineRecipesController extends GetxController
   final UpdateMyRecipesUseCase _updateMyRecipesUseCase =
       UpdateMyRecipesUseCase();
 
+  List<String> _fetchRecipeIds(List<EdamamRecipe> recipes) {
+    return recipes.map((EdamamRecipe recipe) => recipe.id).toList();
+  }
+
   Future<void> saveMyList() async {
+    // Note: Since we are using JSON-SERVER as our mockup REST Web service there is a limitation on
+    // what's in our control. Ideally we must put this condition on the backend to
+    // avoid any performance issues.
     isSaving.value = true;
-    final defaultIds =
-        myRecipes.map((EdamamRecipe recipe) => recipe.id).toList();
-
-    final toRemoveIDs = defaultIds
-        .where((String id) => !selectedRecipeIDs.contains(id))
-        .toList();
-
-    final nonExistingRecipes = edamamMasterList
-        .where((recipe) =>
-            selectedRecipeIDs.contains(recipe.id) &&
-            !defaultIds.contains(recipe.id))
+    final defaultIds = _fetchRecipeIds(myRecipes);
+    final selectedIds = _fetchRecipeIds(selectedRecipes);
+    final toRemoveIDs =
+        defaultIds.where((String id) => !selectedIds.contains(id)).toList();
+    final nonExistingRecipes = selectedRecipes
+        .where((recipe) => !defaultIds.contains(recipe.id))
         .toList();
 
     await _updateMyRecipesUseCase.execute(nonExistingRecipes, toRemoveIDs);
@@ -45,11 +47,16 @@ class OnlineRecipesController extends GetxController
     Get.offAllNamed(HomeScreen.route);
   }
 
-  void updateSelectedRecipe(String id) {
-    if (selectedRecipeIDs.contains(id)) {
-      selectedRecipeIDs.remove(id);
+  bool isRecipeAdded(String id) {
+    return selectedRecipes.firstWhereOrNull((selected) => selected.id == id) !=
+        null;
+  }
+
+  void updateSelectedRecipe(EdamamRecipe recipe) {
+    if (isRecipeAdded(recipe.id)) {
+      selectedRecipes.removeWhere((selected) => selected.id == recipe.id);
     } else {
-      selectedRecipeIDs.add(id);
+      selectedRecipes.add(recipe);
     }
   }
 
@@ -80,9 +87,8 @@ class OnlineRecipesController extends GetxController
 
   @override
   Future<void> onInit() async {
-    final defaultIds =
-        myRecipes.map((EdamamRecipe recipe) => recipe.id).toList();
-    selectedRecipeIDs.value = defaultIds;
+    // selectedRecipes.value = myRecipes;
+    selectedRecipes.addAll(myRecipes);
     super.onInit();
   }
 

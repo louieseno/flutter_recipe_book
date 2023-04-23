@@ -4,7 +4,7 @@ import 'package:client/presenter/screens/home/home_screen.dart';
 import 'package:client/presenter/screens/online_recipes/online_recipes_controller.dart';
 import 'package:client/presenter/widgets/cached_image.dart';
 import 'package:client/services/extensions/string_extension.dart';
-import 'package:client/services/mixins/mixin_recipe_dialog.dart';
+import 'package:client/services/mixins/recipe_dialog_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +35,7 @@ class RecipeList extends StatelessWidget with RecipeDialogMixin {
                   addRecipe: screen == HomeScreen.route
                       ? null
                       : () => Get.find<OnlineRecipesController>()
-                          .updateSelectedRecipe(recipes[index].id),
+                          .updateSelectedRecipe(recipes[index]),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,13 +91,12 @@ class RecipeList extends StatelessWidget with RecipeDialogMixin {
                               Icons.bookmark_add,
                               size: 30,
                               color: Get.find<OnlineRecipesController>()
-                                      .selectedRecipeIDs
-                                      .contains(recipes[index].id)
+                                      .isRecipeAdded(recipes[index].id)
                                   ? Colors.pinkAccent
                                   : Colors.grey,
                             ),
                             onPressed: () => Get.find<OnlineRecipesController>()
-                                .updateSelectedRecipe(recipes[index].id),
+                                .updateSelectedRecipe(recipes[index]),
                           )),
                     if (showDeleteIcon == true)
                       IconButton(

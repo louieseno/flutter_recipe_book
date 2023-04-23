@@ -88,7 +88,7 @@ class RecipeStyle {
       ),
       filled: true,
       hintStyle: TextStyle(color: Colors.grey[400]),
-      hintText: "Search Recipe",
+      hintText: "Search Food Recipe",
       fillColor: Colors.white70);
 
   static const containerPadding = EdgeInsets.all(16.0);
