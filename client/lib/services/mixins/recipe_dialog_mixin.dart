@@ -1,8 +1,10 @@
 import 'package:client/domain/entities/edamam_recipe.dart';
+import 'package:client/presenter/screens/online_recipes/online_recipes_controller.dart';
 import 'package:client/presenter/widgets/cached_image.dart';
 import 'package:client/services/constants/enums.dart';
 import 'package:client/services/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 mixin RecipeDialogMixin {
   Widget _getIngredientsWidget(List<String> strings) {
@@ -80,23 +82,27 @@ mixin RecipeDialogMixin {
                           },
                           child: Padding(
                             padding: RecipeStyle.footerButtonPadding,
-                            child: RichText(
-                              text: const TextSpan(
-                                style: RecipeStyle.footerButtonAddText,
-                                children: [
-                                  WidgetSpan(
-                                    child: Icon(
-                                      Icons.bookmark_add,
-                                      size: 16,
-                                      color: Colors.purple,
-                                    ),
+                            child: Obx(() => RichText(
+                                  text: TextSpan(
+                                    style: RecipeStyle.footerButtonAddText,
+                                    children: [
+                                      const WidgetSpan(
+                                        child: Icon(
+                                          Icons.bookmark_add,
+                                          size: 16,
+                                          color: Colors.purple,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            Get.find<OnlineRecipesController>()
+                                                    .isRecipeAdded(recipe.id)
+                                                ? " Remove Recipe"
+                                                : " Add Recipe",
+                                      ),
+                                    ],
                                   ),
-                                  TextSpan(
-                                    text: " Add Recipe",
-                                  ),
-                                ],
-                              ),
-                            ),
+                                )),
                           ),
                         ),
                         const SizedBox(width: 20),
