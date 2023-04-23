@@ -1,5 +1,6 @@
 import 'package:client/presenter/screens/online_recipes/online_recipes_screen.dart';
 import 'package:client/presenter/widgets/conditional_widget.dart';
+import 'package:client/presenter/widgets/recipe_list.dart';
 import 'package:flutter/material.dart';
 import 'package:client/presenter/screens/home/home_controller.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,18 @@ class HomeScreen extends GetView<HomeController> {
           failedWidget: ConditionalWidget(
             condition: controller.myRecipes.isEmpty,
             passedWidget: const Text('Empty'),
-            failedWidget: const Text('Non-Empty'),
+            failedWidget: Padding(
+              padding: RecipeStyle.containerPadding,
+              child: Column(
+                children: [
+                  RecipeList(
+                    screen: HomeScreen.route,
+                    recipes: controller.myRecipes,
+                    showDeleteIcon: true,
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       )),
@@ -31,7 +43,13 @@ class HomeScreen extends GetView<HomeController> {
           OnlineRecipesScreen.route,
           arguments: controller.myRecipes,
         ),
-        child: const Icon(Icons.add),
+        tooltip:
+            controller.myRecipes.isEmpty ? 'Add Recipes' : 'Modify Recipes',
+        child: ConditionalWidget(
+          condition: controller.myRecipes.isEmpty,
+          passedWidget: const Icon(Icons.add),
+          failedWidget: const Icon(Icons.edit),
+        ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

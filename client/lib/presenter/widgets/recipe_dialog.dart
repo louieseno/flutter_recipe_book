@@ -19,46 +19,49 @@ class RecipeDialog {
         }).toList());
   }
 
-  static Future<void> showDetails(BuildContext context, EdamamRecipe recipe) {
+  static Future<void> showDetails({
+    required BuildContext context,
+    required EdamamRecipe recipe,
+    bool showFooter = true,
+  }) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 200.0,
-          child: Dialog(
-            insetPadding: RecipeStyle.dialogPadding,
-            elevation: 16,
-            child: Center(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: [
-                        Container(
-                          margin: RecipeStyle.imageMargin,
-                          padding: RecipeStyle.imagePadding,
-                          child: CachedImage(
-                            url: recipe.image,
-                            width: 200.0,
-                            height: 200.0,
+        return Dialog(
+          insetPadding: RecipeStyle.dialogPadding,
+          elevation: 16,
+          child: Center(
+            child: Column(
+              children: [
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Container(
+                        margin: RecipeStyle.imageMargin,
+                        padding: RecipeStyle.imagePadding,
+                        child: CachedImage(
+                          url: recipe.image,
+                          width: 200.0,
+                          height: 200.0,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 20.0),
+                        child: Center(
+                          child: Text(
+                            recipe.label,
+                            style: RecipeStyle.labelStyle,
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20.0),
-                          child: Center(
-                            child: Text(
-                              recipe.label,
-                              style: RecipeStyle.labelStyle,
-                            ),
-                          ),
-                        ),
-                        _getIngredientsWidget(recipe.ingredients)
-                      ],
-                    ),
-                  )),
+                      ),
+                      _getIngredientsWidget(recipe.ingredients)
+                    ],
+                  ),
+                )),
+                if (showFooter) ...[
                   Padding(
                     padding: RecipeStyle.footerButtonPadding,
                     child: FooterButton(
@@ -74,13 +77,58 @@ class RecipeDialog {
                       label: 'Close',
                     ),
                   )
-                ],
-              ),
+                ]
+              ],
             ),
           ),
         );
       },
     );
+  }
+
+  static Future<void> showDeletePrompt({
+    required BuildContext context,
+    required EdamamRecipe recipe,
+    required void Function() confirmedDelete,
+  }) {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Delete My Recipe",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+            content: RichText(
+              text: TextSpan(
+                style: const TextStyle(
+                    color: Colors.black, fontSize: 14, height: 1.5),
+                children: <TextSpan>[
+                  const TextSpan(
+                    text: "Are you sure you want to delete\n",
+                  ),
+                  TextSpan(
+                      text: "${recipe.label} recipe ?",
+                      style: const TextStyle(fontWeight: FontWeight.w700))
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text("Yes",
+                    style: TextStyle(color: Colors.redAccent)),
+                onPressed: () {
+                  confirmedDelete();
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }
 

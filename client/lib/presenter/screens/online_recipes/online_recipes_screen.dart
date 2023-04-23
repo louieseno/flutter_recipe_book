@@ -1,10 +1,7 @@
 import 'package:client/presenter/screens/online_recipes/online_recipes_controller.dart';
-import 'package:client/presenter/screens/online_recipes/online_recipes_styles.dart';
-import 'package:client/presenter/widgets/cached_image.dart';
 import 'package:client/presenter/widgets/conditional_widget.dart';
 import 'package:client/presenter/widgets/footer_button.dart';
-import 'package:client/presenter/widgets/recipe_dialog.dart';
-import 'package:client/services/extensions/string_extension.dart';
+import 'package:client/presenter/widgets/recipe_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,97 +21,20 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
             condition: controller.isFetching.value,
             passedWidget: const CircularProgressIndicator(),
             failedWidget: Padding(
-              padding: OnlineRecipeStyles.containerPadding,
+              padding: RecipeStyle.containerPadding,
               child: Column(
                 children: [
                   TextField(
                     controller: controller.searchTextController,
-                    decoration: OnlineRecipeStyles.searchBoxstyle,
+                    decoration: RecipeStyle.searchBoxstyle,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: controller.edamamMasterList.length,
-                        itemBuilder: (context, index) {
-                          final recipeID =
-                              controller.edamamMasterList[index].id;
-
-                          return Padding(
-                            padding: OnlineRecipeStyles.listPadding,
-                            child: InkWell(
-                              onTap: () => RecipeDialog.showDetails(
-                                  context, controller.edamamMasterList[index]),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CachedImage(
-                                        url: controller
-                                            .edamamMasterList[index].image,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            OnlineRecipeStyles.labelPadding,
-                                        child: Wrap(
-                                          direction: Axis.vertical,
-                                          spacing: 5,
-                                          children: [
-                                            Text(
-                                              controller.edamamMasterList[index]
-                                                  .label,
-                                              style:
-                                                  OnlineRecipeStyles.labelStyle,
-                                            ),
-                                            Text(
-                                              controller.edamamMasterList[index]
-                                                  .dishType
-                                                  .toTitleCase(),
-                                              style: OnlineRecipeStyles
-                                                  .dishTypeStyle,
-                                            ),
-                                            RichText(
-                                              text: TextSpan(
-                                                style: OnlineRecipeStyles
-                                                    .ingredientsStyle,
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text:
-                                                          "${controller.edamamMasterList[index].ingredients.length}",
-                                                      style: OnlineRecipeStyles
-                                                          .ingedientsTotalStyle),
-                                                  const TextSpan(
-                                                      text: ' Ingredients')
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Obx(() => IconButton(
-                                        icon: Icon(
-                                          Icons.bookmark_add,
-                                          size: 30,
-                                          color: controller.selectedRecipeIDs
-                                                  .contains(recipeID)
-                                              ? Colors.pinkAccent
-                                              : Colors.grey,
-                                        ),
-                                        onPressed: () => controller
-                                            .updateSelectedRecipe(recipeID),
-                                      ))
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
+                  RecipeList(
+                    screen: OnlineRecipesScreen.route,
+                    recipes: controller.edamamMasterList,
+                    showBookmarkIcon: true,
                   ),
                   Padding(
-                    padding: OnlineRecipeStyles.saveButtonStyle,
+                    padding: RecipeStyle.saveButtonStyle,
                     child: FooterButton(
                       onTap: () => controller.saveMyList(),
                     ),
@@ -127,4 +47,20 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
       ),
     );
   }
+}
+
+class RecipeStyle {
+  static final searchBoxstyle = InputDecoration(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      filled: true,
+      hintStyle: TextStyle(color: Colors.grey[400]),
+      hintText: "Search Recipe",
+      fillColor: Colors.white70);
+
+  static const containerPadding = EdgeInsets.all(16.0);
+
+  static const saveButtonStyle =
+      EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0);
 }
