@@ -36,18 +36,20 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
                     recipes: controller.edamamMasterList,
                     showBookmarkIcon: true,
                   ),
-                  Padding(
-                    padding: RecipeStyle.saveButtonStyle,
-                    child: FooterButton(
-                      onTap: () => controller.saveMyList(),
-                    ),
-                  ),
                 ],
               ),
             ),
           ),
         ),
       ),
+      bottomNavigationBar: Obx(() => !controller.isFetching.value
+          ? Padding(
+              padding: RecipeStyle.saveButtonStyle,
+              child: FooterButton(
+                onTap: () => controller.saveMyList(),
+              ),
+            )
+          : const SizedBox(width: 0.0, height: 0.0)),
     );
   }
 }
@@ -64,6 +66,5 @@ class RecipeStyle {
 
   static const containerPadding = EdgeInsets.all(16.0);
 
-  static const saveButtonStyle =
-      EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0);
+  static const saveButtonStyle = EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 35.0);
 }
