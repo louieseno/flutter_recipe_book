@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 
 class CachedImage extends StatelessWidget {
   final String url;
-  const CachedImage({required this.url, super.key});
+  final double? width;
+  final double? height;
+  const CachedImage(
+      {required this.url, this.width = 60.0, this.height = 60.0, super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 60,
-      height: 60,
+      width: width,
+      height: height,
       child: CachedNetworkImage(
         imageUrl: url,
         progressIndicatorBuilder: (context, url, downloadProgress) =>

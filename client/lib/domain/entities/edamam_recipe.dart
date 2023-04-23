@@ -1,10 +1,12 @@
 class EdamamRecipe {
+  String id;
   String label;
   String image;
   String dishType;
-  List<dynamic> ingredients;
+  List<String> ingredients;
 
   EdamamRecipe({
+    required this.id,
     required this.label,
     required this.image,
     required this.dishType,
@@ -13,10 +15,11 @@ class EdamamRecipe {
 
   factory EdamamRecipe.fromJson(Map<String, dynamic> json) {
     return EdamamRecipe(
+      id: json['uri'].split('#')[1],
       label: json['label'],
       image: json['image'],
       dishType: json['dishType'][0],
-      ingredients: json['ingredientLines'],
+      ingredients: List<String>.from(json['ingredientLines']),
     );
   }
 

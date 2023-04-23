@@ -31,7 +31,4 @@ class OnlineRecipeStyles {
 
   static const saveButtonStyle =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0);
-
-  static const saveButtonTextStyle =
-      TextStyle(fontWeight: FontWeight.bold, color: Colors.white);
 }
