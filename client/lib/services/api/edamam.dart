@@ -28,7 +28,9 @@ class EdamamAPI {
         for (final item in response.data['hits']) {
           snapshot.add(item['recipe']);
         }
-        return EdamamRecipe.recipesFromSnapshot(snapshot);
+        if (snapshot.isNotEmpty) {
+          return EdamamRecipe.recipesFromEdamam(snapshot);
+        }
       }
     } catch (error, trace) {
       print("Error: $error. \n\nTrace: $trace");

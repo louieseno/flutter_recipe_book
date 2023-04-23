@@ -35,6 +35,9 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
                     child: ListView.builder(
                         itemCount: controller.edamamMasterList.length,
                         itemBuilder: (context, index) {
+                          final recipeID =
+                              controller.edamamMasterList[index].id;
+
                           return Padding(
                             padding: OnlineRecipeStyles.listPadding,
                             child: InkWell(
@@ -92,11 +95,18 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
                                       ),
                                     ],
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.bookmark_add,
-                                        size: 20),
-                                    onPressed: () => print('bookmark click'),
-                                  )
+                                  Obx(() => IconButton(
+                                        icon: Icon(
+                                          Icons.bookmark_add,
+                                          size: 30,
+                                          color: controller.selectedRecipeIDs
+                                                  .contains(recipeID)
+                                              ? Colors.pinkAccent
+                                              : Colors.grey,
+                                        ),
+                                        onPressed: () => controller
+                                            .updateSelectedRecipe(recipeID),
+                                      ))
                                 ],
                               ),
                             ),
@@ -106,7 +116,7 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
                   Padding(
                     padding: OnlineRecipeStyles.saveButtonStyle,
                     child: FooterButton(
-                      onTap: () => print('save recipe'),
+                      onTap: () => controller.saveMyList(),
                     ),
                   ),
                 ],

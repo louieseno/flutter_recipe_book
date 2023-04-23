@@ -27,7 +27,10 @@ class HomeScreen extends GetView<HomeController> {
         ),
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(OnlineRecipesScreen.route),
+        onPressed: () => Get.toNamed(
+          OnlineRecipesScreen.route,
+          arguments: controller.myRecipes,
+        ),
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
