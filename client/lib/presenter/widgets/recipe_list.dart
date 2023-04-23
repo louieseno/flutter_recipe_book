@@ -3,12 +3,12 @@ import 'package:client/presenter/screens/home/home_controller.dart';
 import 'package:client/presenter/screens/home/home_screen.dart';
 import 'package:client/presenter/screens/online_recipes/online_recipes_controller.dart';
 import 'package:client/presenter/widgets/cached_image.dart';
-import 'package:client/presenter/widgets/recipe_dialog.dart';
 import 'package:client/services/extensions/string_extension.dart';
+import 'package:client/services/mixins/mixin_recipe_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RecipeList extends StatelessWidget {
+class RecipeList extends StatelessWidget with RecipeDialog {
   final String screen;
   final List<EdamamRecipe> recipes;
   final bool? showBookmarkIcon;
@@ -29,7 +29,7 @@ class RecipeList extends StatelessWidget {
             return Padding(
               padding: RecipeStyles.listPadding,
               child: InkWell(
-                onTap: () => RecipeDialog.showDetails(
+                onTap: () => showDetails(
                   context: context,
                   recipe: recipes[index],
                   addRecipe: screen == HomeScreen.route
@@ -106,7 +106,7 @@ class RecipeList extends StatelessWidget {
                           size: 30,
                           color: Colors.redAccent,
                         ),
-                        onPressed: () => RecipeDialog.showDeletePrompt(
+                        onPressed: () => showDeletePrompt(
                           context: context,
                           recipe: recipes[index],
                           confirmedDelete: () => Get.find<HomeController>()

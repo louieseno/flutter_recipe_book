@@ -2,8 +2,8 @@ import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/presenter/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 
-class RecipeDialog {
-  static Widget _getIngredientsWidget(List<String> strings) {
+mixin RecipeDialog {
+  Widget _getIngredientsWidget(List<String> strings) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: strings.map((item) {
@@ -22,7 +22,7 @@ class RecipeDialog {
         }).toList());
   }
 
-  static Future<void> showDetails({
+  Future<void> showDetails({
     required BuildContext context,
     required EdamamRecipe recipe,
     void Function()? addRecipe,
@@ -120,7 +120,7 @@ class RecipeDialog {
     );
   }
 
-  static Future<void> showDeletePrompt({
+  Future<void> showDeletePrompt({
     required BuildContext context,
     required EdamamRecipe recipe,
     required void Function() confirmedDelete,
