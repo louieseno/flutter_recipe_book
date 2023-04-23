@@ -22,7 +22,17 @@ class HomeScreen extends GetView<HomeController> {
           passedWidget: const CircularProgressIndicator(),
           failedWidget: ConditionalWidget(
             condition: controller.myRecipes.isEmpty,
-            passedWidget: const Text('Empty'),
+            passedWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Icon(
+                  Icons.auto_stories_outlined,
+                  color: Colors.purple,
+                  size: 100,
+                ),
+                Text('No Recipe Data', style: HomeScreenStyle.noDataTextStyle)
+              ],
+            ),
             failedWidget: Padding(
               padding: RecipeStyle.containerPadding,
               child: Column(
@@ -53,4 +63,9 @@ class HomeScreen extends GetView<HomeController> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class HomeScreenStyle {
+  static const noDataTextStyle =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
 }
