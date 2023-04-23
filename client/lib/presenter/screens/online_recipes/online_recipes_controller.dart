@@ -73,7 +73,7 @@ class OnlineRecipesController extends GetxController
       _searchDebounce?.cancel();
     }
 
-    _searchDebounce = Timer(const Duration(milliseconds: 800), () async {
+    _searchDebounce = Timer(const Duration(milliseconds: 500), () async {
       await _fetchMasterlist(searchValue: search);
     });
   }
@@ -94,7 +94,6 @@ class OnlineRecipesController extends GetxController
 
   @override
   Future<void> onReady() async {
-    print('READY recipe');
     await _fetchMasterlist();
     super.onReady();
   }

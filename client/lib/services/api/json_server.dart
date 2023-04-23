@@ -12,9 +12,13 @@ class JSONServerAPI {
     dio = Dio();
   }
 
-  Future<List<EdamamRecipe>> getMyRecipes() async {
+  Future<List<EdamamRecipe>> getMyRecipes({String? search}) async {
     try {
-      final response = await dio.get("$baseURL/recipes");
+      String queryUrl = "$baseURL/recipes";
+      if (search != null && search.isNotEmpty) {
+        queryUrl = "$queryUrl?label_like=${search.trim()}";
+      }
+      final response = await dio.get(queryUrl);
       if (response.statusCode == 200) {
         final snapshot = response.data as List<dynamic>;
         return EdamamRecipe.recipesFromJsonServer(snapshot);

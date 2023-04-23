@@ -30,38 +30,50 @@ class HomeScreen extends GetView<HomeController> with RecipeDialogMixin {
         ],
       ),
       body: Center(
-          child: Obx(
-        () => ConditionalWidget(
-          condition: controller.isFetching.value,
-          passedWidget: const CustomLoader(
-            message: 'Fetching My Recipes',
-          ),
-          failedWidget: ConditionalWidget(
-            condition: controller.myRecipes.isEmpty,
-            passedWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Icon(
-                  Icons.auto_stories_outlined,
-                  color: Colors.purple,
-                  size: 100,
-                ),
-                Text('No Recipe Data', style: HomeScreenStyle.noDataTextStyle)
-              ],
+          child: Padding(
+        padding: HomeScreenStyle.containerPadding,
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 15.0),
+              child: TextField(
+                controller: controller.searchTextController,
+                onChanged: (String value) => controller.searchMyRecipe(value),
+                decoration: HomeScreenStyle.searchBoxstyle,
+              ),
             ),
-            failedWidget: Padding(
-              padding: HomeScreenStyle.containerPadding,
-              child: Column(
-                children: [
-                  RecipeList(
+            Obx(
+              () => ConditionalWidget(
+                condition: controller.isFetching.value,
+                passedWidget: const CustomLoader(
+                  message: 'Fetching My Recipes',
+                ),
+                failedWidget: ConditionalWidget(
+                  condition: controller.myRecipes.isEmpty,
+                  passedWidget: Container(
+                    margin: const EdgeInsets.only(top: 100.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const <Widget>[
+                        Icon(
+                          Icons.auto_stories_outlined,
+                          color: Colors.purple,
+                          size: 100,
+                        ),
+                        Text('No Recipe Data',
+                            style: HomeScreenStyle.noDataTextStyle)
+                      ],
+                    ),
+                  ),
+                  failedWidget: RecipeList(
                     screen: HomeScreen.route,
                     recipes: controller.myRecipes,
                     showDeleteIcon: true,
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       )),
       floatingActionButton: Obx(() => FloatingActionButton(
@@ -86,4 +98,13 @@ class HomeScreenStyle {
 
   static const noDataTextStyle =
       TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
+
+  static final searchBoxstyle = InputDecoration(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      filled: true,
+      hintStyle: TextStyle(color: Colors.grey[400]),
+      hintText: "Search My Recipe",
+      fillColor: Colors.white70);
 }

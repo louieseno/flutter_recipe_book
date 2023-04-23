@@ -28,8 +28,11 @@ class DateImplementRecipe
   }
 
   @override
-  Future<List<EdamamRecipe>> get fetchMyRecipes async {
-    final List<EdamamRecipe> response = await JSONServerAPI().getMyRecipes();
+  Future<List<EdamamRecipe>> fetchMyRecipes({
+    String? search,
+  }) async {
+    final List<EdamamRecipe> response =
+        await JSONServerAPI().getMyRecipes(search: search);
     return _sortResponse(response);
   }
 
