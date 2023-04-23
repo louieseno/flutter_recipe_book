@@ -3,10 +3,13 @@ import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/domain/usecases/recipe/fetch_edamam_recipes.dart';
 import 'package:client/domain/usecases/recipe/update_my_recipes.dart';
 import 'package:client/presenter/screens/home/home_screen.dart';
+import 'package:client/services/mixins/shared_preference_mixin.dart';
+import 'package:client/services/mixins/sort_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OnlineRecipesController extends GetxController {
+class OnlineRecipesController extends GetxController
+    with SharedPreferenceMixin, SortMixin {
   List<EdamamRecipe> myRecipes = Get.arguments;
 
   Timer? _searchDebounce;
@@ -50,6 +53,14 @@ class OnlineRecipesController extends GetxController {
     }
   }
 
+  Future<void> sortRecipeList(String value) async {
+    isFetching.value = true;
+    await setSortingValue(value);
+    sortList(value, edamamMasterList);
+    edamamMasterList.refresh();
+    isFetching.value = false;
+  }
+
   void searchFoodRecipe(String search) {
     if (_searchDebounce?.isActive ?? false) {
       _searchDebounce?.cancel();
@@ -78,7 +89,6 @@ class OnlineRecipesController extends GetxController {
   @override
   Future<void> onReady() async {
     print('READY recipe');
-    searchTextController.text = 'fish';
     await _fetchMasterlist();
     super.onReady();
   }

@@ -1,3 +1,3 @@
-enum SortByValue { asc, desc }
+enum SortByValue { ascending, descending }
 
 enum SharedPrefKey { sortBy }

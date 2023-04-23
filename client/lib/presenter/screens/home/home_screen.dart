@@ -2,11 +2,13 @@ import 'package:client/presenter/screens/online_recipes/online_recipes_screen.da
 import 'package:client/presenter/widgets/conditional_widget.dart';
 import 'package:client/presenter/widgets/custom_loader.dart';
 import 'package:client/presenter/widgets/recipe_list.dart';
+import 'package:client/services/mixins/recipe_dialog_mixin.dart';
+import 'package:client/services/mixins/sort_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:client/presenter/screens/home/home_controller.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends GetView<HomeController> {
+class HomeScreen extends GetView<HomeController> with RecipeDialogMixin {
   static const route = '/';
   const HomeScreen({super.key});
 
@@ -15,6 +17,17 @@ class HomeScreen extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Recipes"),
+        actions: [
+          IconButton(
+            onPressed: () => showSorting(
+                context: context,
+                onSort: (String value) {
+                  controller.sortRecipeList(value);
+                  Navigator.of(context).pop();
+                }),
+            icon: const Icon(Icons.sort),
+          )
+        ],
       ),
       body: Center(
           child: Obx(
@@ -37,7 +50,7 @@ class HomeScreen extends GetView<HomeController> {
               ],
             ),
             failedWidget: Padding(
-              padding: RecipeStyle.containerPadding,
+              padding: HomeScreenStyle.containerPadding,
               child: Column(
                 children: [
                   RecipeList(
@@ -69,6 +82,8 @@ class HomeScreen extends GetView<HomeController> {
 }
 
 class HomeScreenStyle {
+  static const containerPadding = EdgeInsets.all(16.0);
+
   static const noDataTextStyle =
       TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
 }

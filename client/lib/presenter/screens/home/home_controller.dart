@@ -1,9 +1,12 @@
 import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/domain/usecases/recipe/delete_my_recipe.dart';
 import 'package:client/domain/usecases/recipe/fetch_my_recipes.dart';
+import 'package:client/services/mixins/shared_preference_mixin.dart';
+import 'package:client/services/mixins/sort_mixin.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController
+    with SharedPreferenceMixin, SortMixin {
   final RxBool isFetching = false.obs;
   final RxList<EdamamRecipe> myRecipes = <EdamamRecipe>[].obs;
   final FetchMyRecipesUseCase _myRecipeUseCase = FetchMyRecipesUseCase();
@@ -15,11 +18,12 @@ class HomeController extends GetxController {
     myRecipes.removeWhere((EdamamRecipe recipe) => recipe.id == id);
   }
 
-  @override
-  Future<void> onReady() async {
-    print("HOME");
-    await _fetchMyRecipes();
-    super.onReady();
+  Future<void> sortRecipeList(String value) async {
+    isFetching.value = true;
+    await setSortingValue(value);
+    sortList(value, myRecipes);
+    myRecipes.refresh();
+    isFetching.value = false;
   }
 
   Future<void> _fetchMyRecipes() async {
@@ -27,5 +31,12 @@ class HomeController extends GetxController {
     final result = await _myRecipeUseCase.execute();
     myRecipes.addAll(result);
     isFetching.value = false;
+  }
+
+  @override
+  Future<void> onReady() async {
+    print("HOME");
+    await _fetchMyRecipes();
+    super.onReady();
   }
 }

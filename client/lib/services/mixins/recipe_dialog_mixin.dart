@@ -1,8 +1,10 @@
 import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:client/presenter/widgets/cached_image.dart';
+import 'package:client/services/constants/enums.dart';
+import 'package:client/services/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
-mixin RecipeDialog {
+mixin RecipeDialogMixin {
   Widget _getIngredientsWidget(List<String> strings) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,6 +168,31 @@ mixin RecipeDialog {
           );
         });
   }
+
+  Future<void> showSorting({
+    required BuildContext context,
+    required void Function(String value) onSort,
+  }) {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Sort Recipe Name'),
+            children: <Widget>[
+              SimpleDialogOption(
+                padding: RecipeStyle.sortLabelPadding,
+                onPressed: () => onSort(SortByValue.ascending.name),
+                child: Text(SortByValue.ascending.name.toTitleCase()),
+              ),
+              SimpleDialogOption(
+                padding: RecipeStyle.sortLabelPadding,
+                onPressed: () => onSort(SortByValue.descending.name),
+                child: Text(SortByValue.descending.name.toTitleCase()),
+              ),
+            ],
+          );
+        });
+  }
 }
 
 class RecipeStyle {
@@ -187,4 +214,5 @@ class RecipeStyle {
       TextStyle(fontSize: 20, fontWeight: FontWeight.w900);
   static const deleteRichTextStyle =
       TextStyle(color: Colors.black, fontSize: 16, height: 1.5);
+  static const sortLabelPadding = EdgeInsets.all(15);
 }

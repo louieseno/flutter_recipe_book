@@ -8,7 +8,7 @@ import 'package:client/services/mixins/mixin_recipe_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RecipeList extends StatelessWidget with RecipeDialog {
+class RecipeList extends StatelessWidget with RecipeDialogMixin {
   final String screen;
   final List<EdamamRecipe> recipes;
   final bool? showBookmarkIcon;

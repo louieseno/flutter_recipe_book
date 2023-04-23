@@ -1,12 +1,15 @@
+import 'package:client/presenter/screens/home/home_screen.dart';
 import 'package:client/presenter/screens/online_recipes/online_recipes_controller.dart';
 import 'package:client/presenter/widgets/conditional_widget.dart';
 import 'package:client/presenter/widgets/custom_loader.dart';
 import 'package:client/presenter/widgets/footer_button.dart';
 import 'package:client/presenter/widgets/recipe_list.dart';
+import 'package:client/services/mixins/recipe_dialog_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
+class OnlineRecipesScreen extends GetView<OnlineRecipesController>
+    with RecipeDialogMixin {
   static const route = '/recipe';
   const OnlineRecipesScreen({super.key});
 
@@ -15,6 +18,22 @@ class OnlineRecipesScreen extends GetView<OnlineRecipesController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Online Recipes"),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Get.offAllNamed(HomeScreen.route)),
+        actions: [
+          Obx(() => !controller.isFetching.value
+              ? IconButton(
+                  onPressed: () => showSorting(
+                      context: context,
+                      onSort: (String value) {
+                        controller.sortRecipeList(value);
+                        Navigator.of(context).pop();
+                      }),
+                  icon: const Icon(Icons.sort),
+                )
+              : const SizedBox(width: 0.0, height: 0.0))
+        ],
       ),
       body: Center(
         child: Padding(
