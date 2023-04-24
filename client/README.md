@@ -3,12 +3,15 @@
 ### Client Setup
 
 - Installed in your system.
-  [`flutter`](https://docs.flutter.dev/get-started/install) installed in your machine.
+
+* [`flutter`](https://docs.flutter.dev/get-started/install) installed in your machine.
+
 - Installed in your `pubspec.yaml` file.
-  [`dio`](https://pub.dev/packages/dio)
-  [`get`](https://pub.dev/packages/get)
-  [`cached_network_image`](https://pub.dev/packages/cached_network_image)
-  [`shared_preferences`](https://pub.dev/packages/shared_preferences)
+
+* [`dio`](https://pub.dev/packages/dio)
+* [`get`](https://pub.dev/packages/get)
+* [`cached_network_image`](https://pub.dev/packages/cached_network_image)
+* [`shared_preferences`](https://pub.dev/packages/shared_preferences)
 
 Install Flutter dependencies by running.
 
