@@ -1,5 +1,6 @@
 import 'package:client/domain/entities/edamam_recipe.dart';
 import 'package:dio/dio.dart';
+import 'package:client/env/env.dart';
 
 const baseURL = 'https://edamam-recipe-search.p.rapidapi.com';
 const start = 0;
@@ -12,10 +13,8 @@ class EdamamAPI {
   factory EdamamAPI() => _instance;
   EdamamAPI._internal() {
     dio = Dio();
-    dio.options.headers['X-RapidAPI-Key'] =
-        'f3433cabcamsh76a57c9b445f4c0p1fcae0jsn08fb195ae9bc';
-    dio.options.headers["X-RapidAPI-Host"] =
-        'edamam-recipe-search.p.rapidapi.com';
+    dio.options.headers['X-RapidAPI-Key'] = Env.rapidAPIKey;
+    dio.options.headers["X-RapidAPI-Host"] = Env.rapidAPIHost;
   }
 
   Future<List<EdamamRecipe>> getEdamamList({String? search}) async {

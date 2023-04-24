@@ -12,6 +12,9 @@
 - [`get`](https://pub.dev/packages/get)
 - [`cached_network_image`](https://pub.dev/packages/cached_network_image)
 - [`shared_preferences`](https://pub.dev/packages/shared_preferences)
+- [`envied`](https://pub.dev/packages/envied)
+- [`envied_generator`](https://pub.dev/packages/envied_generator)
+- [`build_runner`](https://pub.dev/packages/build_runner)
 
 ##### Install Flutter dependencies by running.
 
