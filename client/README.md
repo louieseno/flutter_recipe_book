@@ -6,14 +6,14 @@
 
 - [`flutter`](https://docs.flutter.dev/get-started/install) installed in your machine.
 
-##### Installed in your `pubspec.yaml` file.
+##### Dependencies in your `pubspec.yaml` file.
 
 - [`dio`](https://pub.dev/packages/dio)
 - [`get`](https://pub.dev/packages/get)
 - [`cached_network_image`](https://pub.dev/packages/cached_network_image)
 - [`shared_preferences`](https://pub.dev/packages/shared_preferences)
 
-Install Flutter dependencies by running.
+##### Install Flutter dependencies by running.
 
 ```bash
    cd <PROJECT_FOLDER>/client

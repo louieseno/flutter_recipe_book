@@ -6,11 +6,11 @@
 
 - [`node`](https://nodejs.org/en/download)
 
-##### Installed in your `package.json` file.
+##### Dependencies in your `package.json` file.
 
 - [`json-server`](https://www.npmjs.com/package/json-server)
 
-Install server dependencies by running.
+##### Install server dependencies by running.
 
 ```bash
    cd <PROJECT_FOLDER>/server
