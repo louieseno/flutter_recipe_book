@@ -95,3 +95,9 @@ This app is architectured based on Uncle Bob's Clean Archutecture. The main focu
 
 - **Device** -
   Part of the outermost layer, Device communicates directly with the platform i.e. Android and iOS. Device is responsible for Native functionality such as GPS and other functionality present within the platform itself like the filesystem. Device calls all Native APIs.
+
+## State Management
+
+This app is using Getx for overseeing states, make routing, and performing dependency injection.
+
+Basing on our architecture we are attaching a controller for each of our screens inside in our Presenter Module to provide a reactive update for our dependent widgets.
