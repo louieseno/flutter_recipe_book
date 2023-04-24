@@ -28,7 +28,8 @@ http://localhost:3000/recipes
 ```
 
 2.  Open a simulator, emulator, or connect to an actual device to run your Flutter Application.
-    _Dev Note: Only tested using iOS Simulator upon development_.
+
+    Dev Note: Only tested using iOS Simulator upon development.
 
     On another terminal start flutter by running this command.
 
