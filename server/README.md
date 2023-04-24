@@ -1,5 +1,8 @@
-**Server**  
-Installed in your machine.
+## Server
+
+### Server Setup
+
+Installed in your system.
 [`node`](https://nodejs.org/en/download)
 Installed in your `package.json` file.
 [`json-server`](https://www.npmjs.com/package/json-server)

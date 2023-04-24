@@ -1,22 +1,31 @@
-### Project Setup
+## Client
 
-**Client**
-Installed in your machine.
+### Client Setup
+
+Installed in your system.
 [`flutter`](https://docs.flutter.dev/get-started/install) installed in your machine.
+
 Installed in your `pubspec.yaml` file.
 [`dio`](https://pub.dev/packages/dio)
 [`get`](https://pub.dev/packages/get)
 [`cached_network_image`](https://pub.dev/packages/cached_network_image)
 [`shared_preferences`](https://pub.dev/packages/shared_preferences)
 
+Install Flutter dependencies by running.
+
+```bash
+   cd <PROJECT_FOLDER>/client
+   flutter pub get
+```
+
 This folder contains your Flutter application.
 
 This app is architectured based on Uncle Bob's Clean Archutecture. The main focus of the architecture is separation of concerns and scalability. It consists of four main modules: `Presenter`, `Domain`, `Data`, and `Device`.
 
-- **Presenter**
+- **Presenter** -
   Our UI components, basically everything that it’s a widget or a widget’s controller.
 
-- **Domain**
+- **Domain** -
   Defines the business logic and entities of the application.
 
   1. **Entities**
@@ -42,7 +51,7 @@ This app is architectured based on Uncle Bob's Clean Archutecture. The main focu
   - E.g. The Login usecase expects a Repository that has login functionality
   - Passed to Usecases from outer layers
 
-- **Data**
+- **Data** -
   Represents the data-layer of the application. The Data module, which is a part of the outermost layer, is responsible for data retrieval. This can be in the form of API calls to a server, a local database, or even both.
 
   1. **Repositories**
@@ -52,10 +61,3 @@ This app is architectured based on Uncle Bob's Clean Archutecture. The main focu
 
 - **Device**
   Part of the outermost layer, Device communicates directly with the platform i.e. Android and iOS. Device is responsible for Native functionality such as GPS and other functionality present within the platform itself like the filesystem. Device calls all Native APIs.
-
-Install Flutter dependencies by running.
-
-```bash
-   cd <PROJECT_FOLDER>/client
-   flutter pub get
-```
