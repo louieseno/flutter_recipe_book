@@ -6,8 +6,8 @@ A cookbook app where you can bookmark your own recipes found online using Edamam
 
 Please check and follow the following instructions in setting up your environment.
 
-- [`client setup`](https://github.com/louieseno/flutter_recipe_book/blob/client/client/README.md)
-- [`server setup`](https://github.com/louieseno/flutter_recipe_book/blob/client/server/README.md)
+- [`client setup`](https://github.com/louieseno/flutter_recipe_book/blob/main/client/README.md)
+- [`server setup`](https://github.com/louieseno/flutter_recipe_book/blob/main/server/README.md)
 
 ### Run the App
 
