@@ -2,10 +2,10 @@
 
 ### Server Setup
 
-Installed in your system.
-[`node`](https://nodejs.org/en/download)
-Installed in your `package.json` file.
-[`json-server`](https://www.npmjs.com/package/json-server)
+- Installed in your system.
+  [`node`](https://nodejs.org/en/download)
+- Installed in your `package.json` file.
+  [`json-server`](https://www.npmjs.com/package/json-server)
 
 Install server dependencies by running.
 

@@ -2,14 +2,13 @@
 
 ### Client Setup
 
-Installed in your system.
-[`flutter`](https://docs.flutter.dev/get-started/install) installed in your machine.
-
-Installed in your `pubspec.yaml` file.
-[`dio`](https://pub.dev/packages/dio)
-[`get`](https://pub.dev/packages/get)
-[`cached_network_image`](https://pub.dev/packages/cached_network_image)
-[`shared_preferences`](https://pub.dev/packages/shared_preferences)
+- Installed in your system.
+  [`flutter`](https://docs.flutter.dev/get-started/install) installed in your machine.
+- Installed in your `pubspec.yaml` file.
+  [`dio`](https://pub.dev/packages/dio)
+  [`get`](https://pub.dev/packages/get)
+  [`cached_network_image`](https://pub.dev/packages/cached_network_image)
+  [`shared_preferences`](https://pub.dev/packages/shared_preferences)
 
 Install Flutter dependencies by running.
 
@@ -59,5 +58,5 @@ This app is architectured based on Uncle Bob's Clean Archutecture. The main focu
   - Every Repository should implement Repository from the Domain layer.
   - Responsible for any API calls and high-level data manipulation
 
-- **Device**
+- **Device** -
   Part of the outermost layer, Device communicates directly with the platform i.e. Android and iOS. Device is responsible for Native functionality such as GPS and other functionality present within the platform itself like the filesystem. Device calls all Native APIs.
