@@ -1,12 +1,10 @@
-## Client
+## Client Setup
 
-### Client Setup
-
-##### Installed in your system.
+## Installed in your system.
 
 - [`flutter`](https://docs.flutter.dev/get-started/install) installed in your machine.
 
-##### Dependencies in your `pubspec.yaml` file.
+## Dependencies in your `pubspec.yaml` file.
 
 - [`dio`](https://pub.dev/packages/dio)
 - [`get`](https://pub.dev/packages/get)
@@ -16,14 +14,45 @@
 - [`envied_generator`](https://pub.dev/packages/envied_generator)
 - [`build_runner`](https://pub.dev/packages/build_runner)
 
-##### Install Flutter dependencies by running.
+## Install Flutter dependencies by running.
 
 ```bash
    cd <PROJECT_FOLDER>/client
    flutter pub get
 ```
 
-This folder contains your Flutter application.
+## Set up your `.env` file
+
+For this project we are using [`Edamam API`](https://rapidapi.com/edamam/api/recipe-search-and-diet) for fetching recipies online.
+
+Note: `lib/env/` configuration folder is not ignored in the version control to allow you from testing and use my API keys with a hard limit of **1000 request/month**.
+
+If you wish to use your own API Key after subscribing to `Edamam API`.
+
+- Copy `.env.example` into `.env`. Your `.env` file should be at the project root `(client)` like this:
+
+```
+X-RapidAPI-Key=""
+X-RapidAPI-Host=""
+```
+
+- Then generate `env.g.dart` file by running:
+
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+If you will encounter any problem like file is not updating, try troubleshooting by:
+
+- Cleaning all the generated files and purge the code-gen cache and re-run the command after to generate.
+
+```bash
+flutter pub run build_runner clean
+```
+
+- Delete the `env.g.dart` file and re-run the command to generate.
+
+## Architecture
 
 This app is architectured based on Uncle Bob's Clean Archutecture. The main focus of the architecture is separation of concerns and scalability. It consists of four main modules: `Presenter`, `Domain`, `Data`, and `Device`.
 

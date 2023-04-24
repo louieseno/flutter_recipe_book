@@ -3,7 +3,7 @@ import 'package:envied/envied.dart';
 part 'env.g.dart';
 
 //  Here you can specify the path to your .env file
-//  relative to the project root
+//  relative to the project root(client)
 @Envied(path: '.env')
 abstract class Env {
   @EnviedField(varName: 'X-RapidAPI-Key', obfuscate: true)
