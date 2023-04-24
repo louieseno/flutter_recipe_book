@@ -29,11 +29,31 @@ http://localhost:3000/recipes
 
 2.  Open a simulator, emulator, or connect to an actual device to run your Flutter Application.
 
-    Dev Note: Only tested using iOS Simulator upon development.
-
-    On another terminal start flutter by running this command.
+On another terminal start flutter by running this command.
 
 ```bash
    cd <PROJECT_FOLDER>/client
    flutter run
 ```
+
+## :bangbang: Take Note
+
+Change `localhost` to actual IP address of your system when running to an actual device or Android Emulator.
+
+Update the following files:
+
+1. `<PROJECT_FOLDER>/server/package.json`
+
+```
+   "server-json": "json-server --watch db.json --port 3000 -H localhost"
+```
+
+re-run command `npm run server-json`
+
+2. `<PROJECT_FOLDER>/client/lib/services/json_server.dart`
+
+```
+const baseURL = 'http://localhost:3000';
+```
+
+re-run command `flutter run` or `hot restart`

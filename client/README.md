@@ -25,7 +25,7 @@
 
 For this project we are using [`Edamam API`](https://rapidapi.com/edamam/api/recipe-search-and-diet) for fetching recipies online.
 
-Note: `lib/env/` configuration folder is not ignored in the version control to allow you from testing and use my API keys with a hard limit of **1000 request/month**.
+:warning: Note: `lib/env/` configuration folder is not ignored in the version control to allow you from testing and use my API keys with a hard limit of **1000 request/month**.
 
 If you wish to use your own API Key after subscribing to `Edamam API`.
 
