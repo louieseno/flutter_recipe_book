@@ -50,7 +50,7 @@ Update the following files:
 
 re-run command `npm run server-json`
 
-2. `<PROJECT_FOLDER>/client/lib/services/json_server.dart`
+2. `<PROJECT_FOLDER>/client/lib/services/api/json_server.dart`
 
 ```
 const baseURL = 'http://localhost:3000';
